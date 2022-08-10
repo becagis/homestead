@@ -236,6 +236,7 @@ class Homestead
       end
 
       config.vm.provision "apt_update", type: "shell", inline: "apt-get update"
+      # config.vm.provision "apt_upgrade", type: "shell", inline: "apt-get upgrade"
 
       # Ensure we have PHP versions used in sites in our features
       if settings.has_key?('sites')
@@ -681,6 +682,9 @@ class Homestead
         s.inline = 'sudo sh -c "echo 0 >> /sys/block/sda/queue/iosched/group_idle"'
       end
     end
+
+    # Disable host checking
+    config.vm.provision "disable host checking", type: "shell", privileged: false, path: script_dir + '/disable-host-checking.sh'
   end
 
   def self.backup_mysql(database, dir, config)
@@ -704,6 +708,19 @@ class Homestead
     config.trigger.before :destroy do |trigger|
       trigger.warn = "Backing up mongodb database #{database}..."
       trigger.run_remote = {inline: "mkdir -p #{dir}/#{now} && mongodump --db #{database} --out #{dir}/#{now}"}
+    end
+  end
+
+  def self.install_plugins(required_plugins)
+    # Check if the necessary plugins are installed
+    plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
+    if not plugins_to_install.empty?
+      puts "Installing plugins: #{plugins_to_install.join(' ')}"
+      if system "vagrant plugin install #{plugins_to_install.join(' ')}"
+          exec "vagrant #{ARGV.join(' ')}"
+      else
+          abort "Installation of one or more plugins has failed. Aborting."
+      end
     end
   end
 end

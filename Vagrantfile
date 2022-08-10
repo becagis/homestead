@@ -17,6 +17,8 @@ require File.expand_path(File.dirname(__FILE__) + '/scripts/homestead.rb')
 
 Vagrant.require_version '>= 2.2.4'
 
+# Homestead.install_plugins(%w( vagrant-hostmanager vagrant-bindfs vagrant-hostsupdater vagrant-goodhosts))
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     if File.exist? aliasesPath then
         config.vm.provision "file", source: aliasesPath, destination: "/tmp/bash_aliases"
@@ -43,15 +45,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         config.vm.provision "Run customize script", type: "shell", path: customizationScriptPath, privileged: false, keep_color: true
     end
 
-    if Vagrant.has_plugin?('vagrant-hostsupdater')
-        config.hostsupdater.remove_on_suspend = false
-        config.hostsupdater.aliases = settings['sites'].map { |site| site['map'] }
-    elsif Vagrant.has_plugin?('vagrant-hostmanager')
-        config.hostmanager.enabled = true
-        config.hostmanager.manage_host = true
-        config.hostmanager.aliases = settings['sites'].map { |site| site['map'] }
-    elsif Vagrant.has_plugin?('vagrant-goodhosts')
-        config.goodhosts.aliases = settings['sites'].map { |site| site['map'] }
+    if settings['sites']
+        if Vagrant.has_plugin?('vagrant-hostsupdater')
+            config.hostsupdater.remove_on_suspend = false
+            config.hostsupdater.aliases = settings['sites'].map { |site| site['map'] }
+        elsif Vagrant.has_plugin?('vagrant-hostmanager')
+            config.hostmanager.enabled = true
+            config.hostmanager.manage_host = true
+            config.hostmanager.aliases = settings['sites'].map { |site| site['map'] }
+        elsif Vagrant.has_plugin?('vagrant-goodhosts')
+            config.goodhosts.aliases = settings['sites'].map { |site| site['map'] }
+        end
     end
 
     if Vagrant.has_plugin?('vagrant-notify-forwarder')

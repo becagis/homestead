@@ -1,39 +1,15 @@
 ---
-ip: "192.168.56.56"
-memory: 2048
-cpus: 2
+ip: "192.168.10.10"
+memory: 8192
+cpus: 4
 provider: virtualbox
 
-authorize: ~/.ssh/id_rsa.pub
+authorize: ~/.ssh/insecure_private_key.pub
 
 keys:
-    - ~/.ssh/id_rsa
-
-folders:
-    - map: ~/code
-      to: /home/vagrant/code
-
-sites:
-    - map: homestead.test
-      to: /home/vagrant/code/public
-
-databases:
-    - homestead
+    - ~/.ssh/insecure_private_key
 
 features:
-    - mariadb: false
-    - ohmyzsh: false
-    - webdriver: false
-
-#services:
-#    - enabled:
-#        - "postgresql@12-main"
-#    - disabled:
-#        - "postgresql@11-main"
-
-# ports:
-#     - send: 50000
-#       to: 5000
-#     - send: 7777
-#       to: 777
-#       protocol: udp
+    - ohmyzsh: true
+    - pm2: true
+    - python: true
