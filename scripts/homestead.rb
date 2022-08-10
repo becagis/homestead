@@ -235,7 +235,7 @@ class Homestead
         end
       end
 
-      config.vm.provision "apt_update", type: "shell", inline: "apt-get update"
+      # config.vm.provision "apt_update", type: "shell", inline: "apt-get update"
       # config.vm.provision "apt_upgrade", type: "shell", inline: "apt-get upgrade"
 
       # Ensure we have PHP versions used in sites in our features
@@ -684,7 +684,14 @@ class Homestead
     end
 
     # Disable host checking
-    # config.vm.provision "disable host checking", type: "shell", privileged: false, path: script_dir + '/disable-host-checking.sh'
+    config.vm.provision "disable host checking", type: "shell", privileged: false, path: script_dir + '/my-disable-host-checking.sh'
+
+    # Enable password authentication in SSH
+    config.vm.provision "enable password authentication", type: "shell", path: script_dir + '/my-enable-password-authentication.sh'
+
+    # Using insecure private key
+    config.vm.provision "file", source: "~/.vagrant.d/insecure_private_key", destination: '/tmp/insecure_private_key'
+    config.vm.provision "using insecure private key", type: "shell", path: script_dir + '/my-using-insecure-private-key.sh'
   end
 
   def self.backup_mysql(database, dir, config)

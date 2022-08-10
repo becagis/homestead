@@ -10,19 +10,15 @@ fi
 
 export DEBIAN_FRONTEND=noninteractive
 
-if [ -f /home/$WSL_USER_NAME/.homestead-features/awscli ]
+if [ -f /home/$WSL_USER_NAME/.homestead-features/basic ]
 then
-    echo "AWS CLI already installed."
+    echo "basic already installed."
     exit 0
 fi
 
-touch /home/$WSL_USER_NAME/.homestead-features/awscli
+touch /home/$WSL_USER_NAME/.homestead-features/basic
 chown -Rf $WSL_USER_NAME:$WSL_USER_GROUP /home/$WSL_USER_NAME/.homestead-features
 
-# Install AWS CLI
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-./aws/install
-
-rm -rf awscliv2.zip aws
-
+# Install basic tools
+apt-get install -y net-tools
+timedatectl set-timezone Asia/Ho_Chi_Minh

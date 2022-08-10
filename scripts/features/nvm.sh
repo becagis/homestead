@@ -10,19 +10,13 @@ fi
 
 export DEBIAN_FRONTEND=noninteractive
 
-if [ -f /home/$WSL_USER_NAME/.homestead-features/awscli ]
+if [ -f /home/$WSL_USER_NAME/.homestead-features/nvm ]
 then
-    echo "AWS CLI already installed."
+    echo "nvm already installed."
     exit 0
 fi
 
-touch /home/$WSL_USER_NAME/.homestead-features/awscli
+touch /home/$WSL_USER_NAME/.homestead-features/nvm
 chown -Rf $WSL_USER_NAME:$WSL_USER_GROUP /home/$WSL_USER_NAME/.homestead-features
 
-# Install AWS CLI
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-./aws/install
-
-rm -rf awscliv2.zip aws
-
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash

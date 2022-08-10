@@ -11,4 +11,10 @@ keys:
 
 features:
     - ohmyzsh: true
+    - node: true
     - ansible: true
+    - awscli: true
+    - terraform: true
+    - pm2: true
+    - python: true
+    - rvm: true
