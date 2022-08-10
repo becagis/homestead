@@ -11,5 +11,4 @@ keys:
 
 features:
     - ohmyzsh: true
-    - pm2: true
-    - python: true
+    - ansible: true
