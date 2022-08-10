@@ -684,7 +684,7 @@ class Homestead
     end
 
     # Disable host checking
-    config.vm.provision "disable host checking", type: "shell", privileged: false, path: script_dir + '/disable-host-checking.sh'
+    # config.vm.provision "disable host checking", type: "shell", privileged: false, path: script_dir + '/disable-host-checking.sh'
   end
 
   def self.backup_mysql(database, dir, config)

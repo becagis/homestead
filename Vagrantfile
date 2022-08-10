@@ -35,7 +35,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         abort "Homestead settings file not found in #{confDir}"
     end
 
-    Homestead.configure(config, settings)
+    config.vm.define settings['name'] ||= 'homestead', primary: true do |master_config|
+        Homestead.configure(master_config, settings)
+    end
 
     if File.exist? afterScriptPath then
         config.vm.provision "Run after.sh", type: "shell", path: afterScriptPath, privileged: false, keep_color: true
