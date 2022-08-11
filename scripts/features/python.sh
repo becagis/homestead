@@ -25,3 +25,5 @@ apt-get install -y python3-pip build-essential libssl-dev libffi-dev python3-dev
 sudo -H -u vagrant bash -c 'pip3 install django'
 sudo -H -u vagrant bash -c 'pip3 install numpy'
 sudo -H -u vagrant bash -c 'pip3 install masonite'
+sudo -H -u vagrant bash -c 'pip3 install aws-sam-cli' # fix: markupsafe conflix ansible
+
