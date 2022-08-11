@@ -31,10 +31,43 @@ chown vagrant:vagrant /home/vagrant/.zprofile
 chsh -s /bin/zsh vagrant
 
 # Install plugins
-[[ -f /home/vagrant/.zsh-snap/znap.zsh ]] || git clone --depth 1 -- https://github.com/marlonrichert/zsh-snap.git /home/vagrant/.zsh-snap
-echo "source /home/vagrant/.zsh-snap/znap.zsh" | tee -a /home/vagrant/.zshrc
-echo "znap source zsh-users/zsh-syntax-highlighting" | tee -a /home/vagrant/.zshrc
-echo "znap source marlonrichert/zsh-autocomplete" | tee -a /home/vagrant/.zshrc
-echo "znap source zsh-users/zsh-autosuggestions" | tee -a /home/vagrant/.zshrc
+# https://jpcercal.com/en/iterm2-plus-zplug-means-productivity/
+# https://www.woefe.com/posts/bootstrap_zsh.html
+su - vagrant -c 'curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh'
 
+tee -a /home/vagrant/.zshrc <<EOF
 
+###########################################################
+# Pre configuration
+
+# Define the environment variable ZPLUG_HOME 
+export ZPLUG_HOME=/home/vagrant/.zplug
+
+# Loads zplug
+source \$ZPLUG_HOME/init.zsh
+
+# Clear packages
+zplug clear
+
+###########################################################
+# Packages
+
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "marlonrichert/zsh-autocomplete"
+zplug "zsh-users/zsh-history-substring-search"
+
+###########################################################
+# Theme
+
+# zplug 'dracula/zsh', as:theme
+
+###########################################################
+# Install packages that have not been installed yet
+
+# zplug check returns true if all packages are installed
+! zplug check --verbose && zplug install
+
+# source plugins and add commands to the PATH
+zplug load
+EOF
