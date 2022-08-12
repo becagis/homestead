@@ -31,4 +31,4 @@ fi
 
 which nvm -v > /dev/null || su - vagrant -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash'
 
-su - vagrant -c "source /home/vagrant/.nvm/nvm.sh && nvm install ${installVersion}"
+su - vagrant -c "source /home/vagrant/.nvm/nvm.sh && nvm install ${installVersion} && npm install -g pnpm"

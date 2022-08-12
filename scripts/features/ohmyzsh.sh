@@ -54,8 +54,8 @@ zplug clear
 
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-autosuggestions"
-zplug "marlonrichert/zsh-autocomplete"
 zplug "zsh-users/zsh-history-substring-search"
+zplug "marlonrichert/zsh-autocomplete"
 
 ###########################################################
 # Theme

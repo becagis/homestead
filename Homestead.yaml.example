@@ -1,5 +1,5 @@
 ---
-ip: "192.168.10.10"
+ip: "192.168.56.56"
 memory: 8192
 cpus: 4
 provider: virtualbox
@@ -9,12 +9,30 @@ authorize: ~/.ssh/insecure_private_key.pub
 keys:
     - ~/.ssh/insecure_private_key
 
+folders:
+    - map: D:\VNTT\PROJECT
+      to: /home/vagrant/code
+
+sites:
+    - map: homestead.test
+      to: /home/vagrant/code
+
 features:
+    - ansible: true
     - ohmyzsh: true
     - node: true
-    - ansible: true
     - awscli: true
     - terraform: true
     - pm2: true
     - python: true
-    - rvm: true
+    - rvm: false
+    - mysql: true
+    - postgresql: true
+    - webdriver: true
+    - elasticsearch: true
+    - melisearch: true
+
+# services:
+#     - enabled:
+#         - "postgresql"
+    

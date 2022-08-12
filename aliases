@@ -24,6 +24,8 @@ alias yrwp="yarn run watch-poll"
 alias yrh="yarn run hot"
 alias yrp="yarn run production"
 
+alias pn="pnpm"
+
 function artisan() {
     php artisan "$@"
 }
